@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>May I Be Your Boyfriend?</title>
+  <style>
+    :root {
+      --bg1: #fff7fb;
+      --bg2: #ffe4ee;
+      --rose: #ff5f8f;
+      --rose-dark: #e23d73;
+      --pink: #ff9bbb;
+      --lavender: #f7d8ff;
+      --text: #4c2a38;
+      --card: rgba(255, 255, 255, 0.82);
+      --shadow: 0 20px 60px rgba(160, 73, 109, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.95), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(255, 195, 220, 0.7), transparent 32%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: clamp(18px, 2vw, 28px);
+      opacity: 0.25;
+      animation: floatUp linear infinite;
+      filter: drop-shadow(0 4px 10px rgba(255, 95, 143, 0.12));
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(12vh) scale(0.9) rotate(0deg);
+        opacity: 0;
+      }
+      10% { opacity: 0.22; }
+      90% { opacity: 0.25; }
+      100% {
+        transform: translateY(-115vh) scale(1.15) rotate(12deg);
+        opacity: 0;
+      }
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 18px;
+    }
+
+    .card {
+      width: min(980px, 100%);
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.75);
+      backdrop-filter: blur(12px);
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0));
+      pointer-events: none;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 0;
+    }
+
+    .left,
+    .right {
+      padding: 44px;
+      position: relative;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 95, 143, 0.14);
+      color: var(--rose-dark);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin-bottom: 22px;
+      box-shadow: 0 10px 30px rgba(255, 95, 143, 0.08);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.5rem, 5vw, 4.8rem);
+      line-height: 0.96;
+      letter-spacing: -0.05em;
+    }
+
+    .accent {
+      display: inline-block;
+      color: var(--rose-dark);
+      text-shadow: 0 8px 24px rgba(226, 61, 115, 0.16);
+    }
+
+    .subtitle {
+      margin: 22px 0 0;
+      max-width: 520px;
+      font-size: clamp(1rem, 1.5vw, 1.1rem);
+      line-height: 1.7;
+      color: rgba(76, 42, 56, 0.84);
+    }
+
+    .little-hearts {
+      margin-top: 22px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 1.3rem;
+    }
+
+    .cta-row {
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      font: inherit;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .yes-btn {
+      background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+      color: white;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-weight: 800;
+      box-shadow: 0 16px 34px rgba(226, 61, 115, 0.24);
+    }
+
+    .yes-btn:hover {
+      transform: translateY(-2px) scale(1.01);
+    }
+
+    .soft-btn {
+      background: rgba(255,255,255,0.78);
+      color: var(--text);
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      box-shadow: 0 12px 28px rgba(100, 60, 75, 0.08);
+    }
+
+    .message {
+      margin-top: 18px;
+      min-height: 28px;
+      font-weight: 700;
+      color: var(--rose-dark);
+    }
+
+    .photo-shell {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .photo-card {
+      width: min(100%, 390px);
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(255,255,255,0.7);
+      border-radius: 28px;
+      padding: 18px;
+      box-shadow: 0 18px 44px rgba(115, 58, 81, 0.14);
+      transform: rotate(-1.5deg);
+    }
+
+    .photo-card img {
+      display: block;
+      width: 100%;
+      border-radius: 20px;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+    }
+
+    .caption {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(76, 42, 56, 0.88);
+      font-weight: 600;
+    }
+
+    .caption span {
+      color: var(--rose-dark);
+      font-weight: 800;
+    }
+
+    .corner-glow {
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 174, 203, 0.35), transparent 68%);
+      z-index: 0;
+      filter: blur(10px);
+    }
+
+    .glow-1 { top: -60px; left: -40px; }
+    .glow-2 { right: -80px; bottom: -100px; }
+
+    .footer-note {
+      margin-top: 14px;
+      font-size: 0.93rem;
+      color: rgba(76, 42, 56, 0.62);
+    }
+
+    @media (max-width: 820px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+
+      .left, .right {
+        padding: 28px 22px;
+      }
+
+      .photo-card {
+        transform: none;
+      }
+
+      h1 {
+        font-size: clamp(2.35rem, 11vw, 4rem);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts" aria-hidden="true">
+    <span class="heart" style="left: 5%; animation-duration: 15s; animation-delay: -2s;">❤</span>
+    <span class="heart" style="left: 14%; animation-duration: 18s; animation-delay: -8s;">❤</span>
+    <span class="heart" style="left: 24%; animation-duration: 16s; animation-delay: -11s;">♡</span>
+    <span class="heart" style="left: 37%; animation-duration: 20s; animation-delay: -6s;">❤</span>
+    <span class="heart" style="left: 49%; animation-duration: 14s; animation-delay: -10s;">♡</span>
+    <span class="heart" style="left: 61%; animation-duration: 19s; animation-delay: -4s;">❤</span>
+    <span class="heart" style="left: 72%; animation-duration: 17s; animation-delay: -12s;">❤</span>
+    <span class="heart" style="left: 84%; animation-duration: 15s; animation-delay: -7s;">♡</span>
+    <span class="heart" style="left: 93%; animation-duration: 18s; animation-delay: -13s;">❤</span>
+  </div>
+
+  <main class="wrap">
+    <section class="card">
+      <div class="corner-glow glow-1"></div>
+      <div class="corner-glow glow-2"></div>
+
+      <div class="content">
+        <div class="left">
+          <div class="eyebrow">💌 yo i lowk got a question to ask</div>
+          <h1>
+            May I be <br />
+            <span class="accent">your boyfriend?</span>
+          </h1>
+
+          <p class="subtitle">
+            Being with you feels easy, special, and honestly kind of magical. You make everything brighter,
+            so I wanted to make you mine (officially).
+          </p>
+
+          <div class="little-hearts" aria-hidden="true">
+            <span>💗</span>
+            <span>💕</span>
+            <span>💖</span>
+            <span>💘</span>
+            <span>💞</span>
+          </div>
+
+          <div class="cta-row">
+            <button class="yes-btn" onclick="showMessage('cool beans. 💖')">yes bro</button>
+            <button class="soft-btn" onclick="showMessage('wrong answer, try again. 😌💕')">no bro</button>
+          </div>
+
+          <div class="message" id="message"></div>
+        </div>
+
+        <div class="right">
+          <div class="photo-shell">
+            <div class="photo-card">
+              <img 
+                alt="A sweet photo of us together" 
+                src="us_lowk.JPG" 
+                />
+              <div class="caption">pls say yes, <span>we look really good together</span> 💞</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function showMessage(text) {
+      document.getElementById('message').textContent = text;
+    }
+  </script>
+</body>
+</html>
